@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo "Saving packagelist"
+pacman -Qqe > ~/pkglist.txt && echo "done"

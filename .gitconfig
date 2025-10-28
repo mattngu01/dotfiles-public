@@ -1,0 +1,40 @@
+[user]
+	name = Matthew Nguyen
+[core]
+	editor = vim
+	# allow scrolling on macos
+	pager = less -+$LESS -RS
+[alias]
+	c = commit
+	co = checkout
+	pushfwl = push --force-with-lease
+	s = status
+	pullr = pull --rebase
+	l1 = log --oneline
+	lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ai)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)'
+	ri = rebase -i
+	# rebase interactive all
+	ria = "!git rebase -i $(git merge-base main HEAD)"
+	stp = stash pop
+	st = stash
+	sw = switch
+	unstage = restore --staged
+	fixup = "!sh -c '(git diff-files --quiet || (echo Unstaged changes, please commit or stash with --keep-index; exit 1)) && COMMIT=$(git rev-parse HEAD) && git commit --fixup=$COMMIT && git rebase -i --autosquash $COMMIT~1' -"
+	newb = switch -c
+	p = pull
+
+[init]
+	defaultBranch = main
+[push]
+	autoSetupRemote = true
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+[commit]
+	verbose = true
+[branch]
+	sort = -committerdate
+[diff]
+	external = difft
+	algorithm = histogram
+[rebase]
+	updateRefs = true

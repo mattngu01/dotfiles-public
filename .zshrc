@@ -26,5 +26,5 @@ autoload edit-command-line; zle -N edit-command-line
 bindkey "^Xe" edit-command-line
 
 source ~/scripts/general.sh
-source ~/work/work.sh
+[[ -f ~/work/work.sh ]] && source ~/work/work.sh
 

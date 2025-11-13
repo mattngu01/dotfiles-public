@@ -5,6 +5,9 @@
 [includeIf "gitdir:~/code-work/"] 
     path = ~/work/.gitconfig
 
+[includeIf "gitdir:~/work/"] 
+    path = ~/work/.gitconfig
+
 [core]
 	editor = vim
 	# allow scrolling on macos

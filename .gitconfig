@@ -1,5 +1,10 @@
 [user]
 	name = Matthew Nguyen
+
+# work code directories
+[includeIf "gitdir:~/code-work/"] 
+    path = ~/work/.gitconfig
+
 [core]
 	editor = vim
 	# allow scrolling on macos
@@ -27,14 +32,12 @@
 	defaultBranch = main
 [push]
 	autoSetupRemote = true
-[url "git@github.com:"]
-	insteadOf = https://github.com/
+
 [commit]
 	verbose = true
 [branch]
 	sort = -committerdate
 [diff]
-	external = difft
 	algorithm = histogram
 [rebase]
 	updateRefs = true

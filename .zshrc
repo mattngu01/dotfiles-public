@@ -1,3 +1,4 @@
+# Any zsh-specific things should go in here!
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
@@ -17,17 +18,13 @@ zstyle ':vcs_info:git:*' formats '%b '
 setopt PROMPT_SUBST
 PROMPT='%F{green}[%T]%f %n@%m %F{blue}%~%f %F{red}${vcs_info_msg_0_}%f$ '
 
-# Python
-alias cv='python -m venv venv'
-alias sv='source venv/bin/activate'
-alias deac='deactivate'
+# make ctrl-r reverse search work
+bindkey -e
 
-# Docker
-alias ddebug='docker run --rm -it --entrypoint /bin/bash'
-
-# Run things
-fastfetch
+# allow ctrl X + ctrl E to edit line in kitty
+autoload edit-command-line; zle -N edit-command-line
+bindkey "^Xe" edit-command-line
 
 source ~/scripts/general.sh
-
+source ~/work/work.sh
 

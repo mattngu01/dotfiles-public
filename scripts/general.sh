@@ -1,8 +1,13 @@
 #!/bin/bash
 
+# anything related to tooling, aliases, and not affecting zsh behavior goes here
+
+# keep this first, may link tools that are used in later things
+eval "$(mise activate zsh)"
+
 # Python
-alias sv='python3 -m venv venv'
-alias cv='source venv/bin/activate'
+alias sv='python3 -m venv .venv'
+alias cv='source .venv/bin/activate'
 alias deac='deactivate'
 
 # Docker / K8s
@@ -21,17 +26,19 @@ alias tfplanlog='tf plan -out tf.plan -no-color | tee plan.log'
 alias zsrc='source ~/.zshrc'
 alias kssh='kitten ssh'
 alias g='git'
+alias n='nvim'
+
+# AWS
+alias chooseawslogin='aws sso login --profile $(aws configure list-profiles | sort | fzf)'
 
 # disable interactive mode for kubectx
 export KUBECTX_IGNORE_FZF=1
 export EDITOR=vim
 
-# allow ctrl X + ctrl E to edit line in kitty
-autoload edit-command-line; zle -N edit-command-line
-bindkey "^Xe" edit-command-line
-
 eval "$(zoxide init zsh)"
-eval "$(mise activate zsh)"
+
+# github cli autocomplete
+eval "$(gh completion -s zsh)"
 
 random_uuid() {
 	uuidgen | awk '{print tolower($0)}'

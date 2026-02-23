@@ -27,6 +27,7 @@ alias zsrc='source ~/.zshrc'
 alias kssh='kitten ssh'
 alias g='git'
 alias n='nvim'
+alias now='date -u +"%Y-%m-%dT%H-%M-%S%z"'
 
 # AWS
 alias chooseawslogin='aws sso login --profile $(aws configure list-profiles | sort | fzf)'

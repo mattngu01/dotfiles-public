@@ -21,8 +21,10 @@
 	l1 = log --oneline
 	lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ai)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)'
 	ri = rebase -i
-	# rebase interactive all
-	ria = "!git rebase -i $(git merge-base main HEAD)"
+	# rebase interactive main branch
+	rim = "!git rebase -i $(git merge-base main HEAD)"
+	# rebase intractive auto-detect
+	ria = "!git rebase -i $(git merge-base $(git remote show origin | grep 'HEAD branch' | sed 's/.*: //') HEAD)"
 	stp = stash pop
 	st = stash
 	sw = switch

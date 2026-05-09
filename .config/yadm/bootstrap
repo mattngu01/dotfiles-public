@@ -1,5 +1,10 @@
+set -o xtrace
+
 # Skip yadm's .zshrc deployment on NixOS
 # in NixOS we would source the shared file
 if [ ! -f /etc/NIXOS ]; then
   ln -sf "$HOME/.config/zsh/shared.zsh" "$HOME/.zshrc"
 fi
+
+echo "Updating the yadm repo origin URL to SSH"
+yadm remote set-url origin "git@github.com:mattngu01/dotfiles-public.git"

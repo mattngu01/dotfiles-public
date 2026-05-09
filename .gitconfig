@@ -1,5 +1,6 @@
 [user]
 	name = Matthew Nguyen
+    email = mnguy1231@gmail.com
 
 # work code directories
 [includeIf "gitdir:~/code-work/"] 

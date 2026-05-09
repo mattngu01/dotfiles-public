@@ -41,6 +41,9 @@ eval "$(zoxide init zsh)"
 # github cli autocomplete
 eval "$(gh completion -s zsh)"
 
+alias pickprofile='aws configure list-profiles | fzf'
+alias pickawslogin='aws sso login --profile $(pickprofile)'
+
 random_uuid() {
 	uuidgen | awk '{print tolower($0)}'
 }

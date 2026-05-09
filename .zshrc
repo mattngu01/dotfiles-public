@@ -4,8 +4,8 @@ compinit
 # End of lines added by compinstall
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=3000
+SAVEHIST=3000
 # End of lines configured by zsh-newuser-install
 
 # show git branch in prompt
@@ -17,6 +17,11 @@ zstyle ':vcs_info:git:*' formats '%b '
 # prompt
 setopt PROMPT_SUBST
 PROMPT='%F{green}[%T]%f %n@%m %F{blue}%~%f %F{red}${vcs_info_msg_0_}%f$ '
+
+# history
+setopt INC_APPEND_HISTORY # append commands to history as soon as they are entered
+setopt HIST_SAVE_NO_DUPS # do not include duplicates in the history
+setopt SHARE_HISTORY # share history between zsh
 
 # make ctrl-r reverse search work
 bindkey -e

@@ -14,7 +14,7 @@ pager:
 aliases:
   co: pr checkout
   fillpr: pr create --fill-verbose --draft
-  updatepr: '!gh pr view $1 --json commits | jq -r ".commits[] | @text \"- **\(.messageHeadline)**\n\n\(.messageBody)\n\"" | gh pr edit $1 --body-file -'
+  updatepr: '!gh pr view $1 --json commits | jq -r ".commits[] | @text \"**\(.messageHeadline)**\n\n\(.messageBody)\n\"" | gh pr edit $1 --body-file -'
 # The path to a unix socket through which send HTTP connections. If blank, HTTP traffic will be handled by net/http.DefaultTransport.
 http_unix_socket:
 # What web browser gh should use when opening URLs. If blank, will refer to environment.

@@ -1,0 +1,5 @@
+# Skip yadm's .zshrc deployment on NixOS
+# in NixOS we would source the shared file
+if [ ! -f /etc/NIXOS ]; then
+  ln -sf "$HOME/.config/zsh/shared.zsh" "$HOME/.zshrc"
+fi

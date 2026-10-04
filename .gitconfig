@@ -9,6 +9,15 @@
 [includeIf "gitdir:~/work/"] 
     path = ~/work/.gitconfig
 
+[includeIf "gitdir:~/playground/"] 
+    path = ~/work/.gitconfig
+[includeIf "gitdir:/private/var/"] 
+    path = ~/work/.gitconfig
+
+# when using go install, work gitconfig doesn't get used
+[includeIf "gitdir:~/go/"]
+    path = ~/work/.gitconfig
+
 [core]
 	editor = vim
 	# allow scrolling on macos

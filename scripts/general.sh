@@ -3,7 +3,13 @@
 # anything related to tooling, aliases, and not affecting zsh behavior goes here
 
 # keep this first, may link tools that are used in later things
-eval "$(mise activate zsh)"
+# Clear inherited Mise session vars before generating the cache so the cached
+# script only contains the clean activation preamble and hooks.
+if [[ ! -f ~/.cache/mise-activate.zsh || /opt/homebrew/bin/mise -nt ~/.cache/mise-activate.zsh || ~/.config/mise/config.toml -nt ~/.cache/mise-activate.zsh ]]; then
+    mkdir -p ~/.cache
+    env -u MISE_SHELL -u __MISE_DIFF -u __MISE_SESSION -u __MISE_ORIG_PATH mise activate zsh >| ~/.cache/mise-activate.zsh
+fi
+source ~/.cache/mise-activate.zsh
 
 # Python
 alias sv='python3 -m venv .venv'
@@ -36,10 +42,11 @@ alias chooseawslogin='aws sso login --profile $(aws configure list-profiles | so
 export KUBECTX_IGNORE_FZF=1
 export EDITOR=vim
 
-eval "$(zoxide init zsh)"
-
-# github cli autocomplete
-eval "$(gh completion -s zsh)"
+if [[ ! -f ~/.cache/zoxide-init.zsh || /opt/homebrew/bin/zoxide -nt ~/.cache/zoxide-init.zsh ]]; then
+    mkdir -p ~/.cache
+    zoxide init zsh >| ~/.cache/zoxide-init.zsh
+fi
+source ~/.cache/zoxide-init.zsh
 
 alias pickprofile='aws configure list-profiles | fzf'
 alias pickbranch='git branch | fzf'
@@ -48,33 +55,36 @@ alias pickawslogin='aws sso login --profile $(pickprofile)'
 secretcreate() {
     local file="$1"
     local secret_name="$2"
+    local profile="$3"
     if [[ -z "$file" || -z "$secret_name" ]]; then
-        echo "Usage: secret_create <file> <secret-name>" >&2
+        echo "Usage: secret_create <file> <secret-name> <profile>" >&2
         return 1
     fi
     local encoded=$(base64 < "$file")
-    aws secretsmanager create-secret --name "$secret_name" --secret-binary "$encoded"
+    aws secretsmanager create-secret --name "$secret_name" --secret-binary "$encoded" --profile "$profile"
 }
 
 secretpush() {
     local file="$1"
     local secret_id="$2"
+    local profile="$3"
     if [[ -z "$file" || -z "$secret_id" ]]; then
-        echo "Usage: secret_push <file> <secret-id>" >&2
+        echo "Usage: secret_push <file> <secret-id> <profile>" >&2
         return 1
     fi
     local encoded=$(base64 < "$file")
-    aws secretsmanager put-secret-value --secret-id "$secret_id" --secret-binary "$encoded"
+    aws secretsmanager put-secret-value --secret-id "$secret_id" --secret-binary "$encoded" --profile "$profile"
 }
 
 secretpull() {
     local secret_id="$1"
     local file="$2"
+    local profile="$3"
     if [[ -z "$secret_id" || -z "$file" ]]; then
-        echo "Usage: secret_pull <secret-id> <file>" >&2
+        echo "Usage: secret_pull <secret-id> <file> <profile>" >&2
         return 1
     fi
-    aws secretsmanager get-secret-value --secret-id "$secret_id" --query 'SecretBinary' --output text | base64 --decode > "$file"
+    aws secretsmanager get-secret-value --secret-id "$secret_id" --query 'SecretBinary' --output text --profile "$profile" | base64 --decode > "$file"
 }
 
 secretcopy() {
@@ -178,4 +188,10 @@ secretcopy() {
 
 random_uuid() {
 	uuidgen | awk '{print tolower($0)}'
+}
+
+relatedprs() {
+        local prefix=$(git rev-parse --show-prefix)
+        local search="${prefix}$1"
+        gh pr list --state all --json number,title,files,url | jq --arg val "$search" '[.[] | select(.files | any(.path | test($val))) | .url]'
 }

@@ -44,3 +44,4 @@ ruff = "latest"
 
 [settings]
 experimental = true
+env_cache = true

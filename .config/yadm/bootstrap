@@ -8,3 +8,5 @@ fi
 
 echo "Updating the yadm repo origin URL to SSH"
 yadm remote set-url origin "git@github.com:mattngu01/dotfiles-public.git"
+
+ln -sfv "$HOME/.config/mise/config.personal.toml" "$HOME/.config/mise/config.toml"

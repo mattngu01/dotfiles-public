@@ -51,6 +51,7 @@ bindkey -e
 autoload edit-command-line; zle -N edit-command-line
 bindkey "^Xe" edit-command-line
 
+## work needs to source first, since it sets MISE_ENV=work before mise initializes in ~/scripts/general.sh
 [[ -f ~/work/work.sh ]] && source ~/work/work.sh
 source ~/scripts/general.sh
 

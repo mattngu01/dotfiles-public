@@ -10,6 +10,7 @@ if [[ ! -f ~/.cache/mise-activate.zsh || /opt/homebrew/bin/mise -nt ~/.cache/mis
     env -u MISE_SHELL -u __MISE_DIFF -u __MISE_SESSION -u __MISE_ORIG_PATH mise activate zsh >| ~/.cache/mise-activate.zsh
 fi
 source ~/.cache/mise-activate.zsh
+eval "$(zoxide init zsh)"
 
 # Python
 alias sv='python3 -m venv .venv'
